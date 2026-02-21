@@ -1,45 +1,39 @@
 using System;
 
-class sort {
+class Program
+{
+    static void Main()
+    {
+        int[] data = { 10, 80, 30, 90, 40, 50, 70 };
+        QuickSort(data, 0, data.Length - 1);
+        Console.WriteLine(string.Join(", ", data));
+    }
 
-    static int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
+    static void QuickSort(int[] array, int low, int high)
+    {
+        if (low < high)
+        {
+            int pivotIndex = Partition(array, low, high);
+            QuickSort(array, low, pivotIndex - 1);
+            QuickSort(array, pivotIndex + 1, high);
+        }
+    }
 
+    static int Partition(int[] array, int low, int high)
+    {
+        int pivot = array[high];
         int i = low - 1;
-        for (int j = low; j <= high - 1; j++) {
-            if (arr[j] < pivot) {
+
+        for (int j = low; j < high; j++)
+        {
+            if (array[j] <= pivot)
+            {
                 i++;
-                swap(arr, i, j);
+                (array[i], array[j]) = (array[j], array[i]);
             }
         }
 
-        swap(arr, i + 1, high);  
+        (array[i + 1], array[high]) = (array[high], array[i + 1]);
         return i + 1;
-    }
-
-    static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
-    static void quickSort(int[] arr, int low, int high) {
-        if (low < high) {
-            
-            int pi = partition(arr, low, high);
-
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
-        }
-    }
-
-    static void Main(string[] args) {
-        int[] arr = {10, 7, 8, 9, 1, 5};
-        int n = arr.Length;
-
-        quickSort(arr, 0, n - 1);
-        foreach (int val in arr) {
-            Console.Write(val + " "); 
-        }
     }
 }
